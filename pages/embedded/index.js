@@ -1,3 +1,4 @@
+import { nodesFromEdges } from '@shopify/admin-graphql-api-utilities'
 import { Layout,
   Page,
   FooterHelp,
@@ -5,7 +6,7 @@ import { Layout,
   MediaCard,
   Card,
   ResourceList,
-  Thumbnail, 
+  Thumbnail,
   ResourceItem,
   TextStyle,
   TextContainer,
@@ -20,11 +21,12 @@ export default function Index() {
   const primaryAction = {content: 'Settings', url: '/embedded/settings'};
   const [products, setProducts] = useState([]);
   const app = useAppBridge();
-  
+
   useEffect(async () => {
     const response = await authenticatedFetch(app)('/api/products');
     const {body} = await response.json();
-    setProducts(body.products);
+    console.log(body)
+    setProducts(nodesFromEdges(body.data.products.edges));
   }, [])
 
   return (
@@ -73,13 +75,13 @@ export default function Index() {
               resourceName={{singular: 'product', plural: 'products'}}
               items={products}
               renderItem={(item) => {
-                const {id, url, title, image, vendor} = item;
-                const media = <Thumbnail source={image ? image.src : ''} alt={image ? image.alt : ''} />;
+                const {id, onlineStoreUrl, title, featuredImage, vendor} = item;
+                const media = <Thumbnail source={featuredImage ? featuredImage.src : ''} alt={featuredImage ? featuredImage.alt : ''} />;
 
                 return (
                   <ResourceItem
                     id={id}
-                    url={url}
+                    url={onlineStoreUrl}
                     media={media}
                     accessibilityLabel={`View details for ${title}`}
                   >
