@@ -1,5 +1,6 @@
 import { nodesFromEdges } from '@shopify/admin-graphql-api-utilities'
-import { Layout,
+import {
+  Layout,
   Page,
   FooterHelp,
   Link,
@@ -11,22 +12,29 @@ import { Layout,
   TextStyle,
   TextContainer,
   Heading,
-} from "@shopify/polaris";
+} from '@shopify/polaris'
 import {} from '@shopify/polaris'
-import { useEffect, useState } from "react";
-import { authenticatedFetch } from "@shopify/app-bridge-utils";
-import { useAppBridge } from "@shopify/app-bridge-react";
+import { useEffect, useState } from 'react'
+import { authenticatedFetch } from '@shopify/app-bridge-utils'
+import { useAppBridge } from '@shopify/app-bridge-react'
 
-export default function Index() {
-  const primaryAction = {content: 'Settings', url: '/embedded/settings'};
-  const [products, setProducts] = useState([]);
-  const app = useAppBridge();
+export default function Index () {
+  const primaryAction = { content: 'Settings', url: '/embedded/settings' }
+  const [products, setProducts] = useState([])
+  const app = useAppBridge()
 
-  useEffect(async () => {
-    const response = await authenticatedFetch(app)('/api/products');
-    const {body} = await response.json();
-    console.log(body)
-    setProducts(nodesFromEdges(body.data.products.edges));
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await authenticatedFetch(app)('/api/products')
+        const { body } = await response.json()
+        setProducts(nodesFromEdges(body.data.products.edges))
+      } catch (e) {
+        console.error(e)
+      }
+    }
+
+    fetchProducts()
   }, [])
 
   return (
@@ -41,10 +49,10 @@ export default function Index() {
             primaryAction={{
               content: 'Learn about getting started',
               url: 'https://shopify.dev/concepts/apps',
-              external: true
+              external: true,
             }}
             description="It looks like things are setup correctly and you should be able to start developing."
-            popoverActions={[{content: 'Dismiss', onAction: () => {}}]}
+            popoverActions={[{ content: 'Dismiss', onAction: () => {} }]}
           >
             <img
               alt=""
@@ -72,11 +80,14 @@ export default function Index() {
           <Card>
             <ResourceList
               title="List of Products"
-              resourceName={{singular: 'product', plural: 'products'}}
+              resourceName={{ singular: 'product', plural: 'products' }}
               items={products}
               renderItem={(item) => {
-                const {id, onlineStoreUrl, title, featuredImage, vendor} = item;
-                const media = <Thumbnail source={featuredImage ? featuredImage.src : ''} alt={featuredImage ? featuredImage.alt : ''} />;
+                const { id, onlineStoreUrl, title, featuredImage, vendor } = item
+                const media = <Thumbnail
+                  source={featuredImage ? featuredImage.src : ''}
+                  alt={featuredImage ? featuredImage.alt : ''}
+                />
 
                 return (
                   <ResourceItem
@@ -90,7 +101,7 @@ export default function Index() {
                     </h3>
                     <div>{vendor}</div>
                   </ResourceItem>
-                );
+                )
               }}
             />
           </Card>
@@ -104,5 +115,5 @@ export default function Index() {
         </Layout.Section>
       </Layout>
     </Page>
-  );
+  )
 };
