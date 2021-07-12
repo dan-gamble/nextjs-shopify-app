@@ -13,7 +13,6 @@ import {
   TextContainer,
   Heading,
 } from '@shopify/polaris'
-import {} from '@shopify/polaris'
 import { useEffect, useState } from 'react'
 import { authenticatedFetch } from '@shopify/app-bridge-utils'
 import { useAppBridge } from '@shopify/app-bridge-react'
@@ -79,7 +78,6 @@ export default function Index () {
         <Layout.Section>
           <Card>
             <ResourceList
-              title="List of Products"
               resourceName={{ singular: 'product', plural: 'products' }}
               items={products}
               renderItem={(item) => {
@@ -116,4 +114,4 @@ export default function Index () {
       </Layout>
     </Page>
   )
-};
+}
