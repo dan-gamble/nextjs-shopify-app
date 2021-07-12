@@ -1,6 +1,5 @@
 import Shopify, { ApiVersion } from '@shopify/shopify-api'
 import RedisStore from '@lib/redis'
-import { ContextParams } from '@shopify/shopify-api/dist/base_types'
 
 const sessionStorage = new RedisStore(process.env.REDIS_URL)
 const context = {
