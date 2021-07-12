@@ -3,6 +3,7 @@ import { ApolloProvider as Provider } from 'react-apollo'
 import { fetch } from '@lib/app-bridge'
 import { useAppBridge } from '@shopify/app-bridge-react'
 import { useMemo } from 'react'
+import { useRouteChangeLoader } from '../hooks/useRouteChangeLoader'
 
 export default function ApolloProvider ({ children }) {
   const app = useAppBridge()
@@ -17,6 +18,9 @@ export default function ApolloProvider ({ children }) {
       }),
     [app],
   )
+
+  // Used here as it's inside the AppBridgeProvider
+  useRouteChangeLoader()
 
   return <Provider client={client}>{children}</Provider>
 }
