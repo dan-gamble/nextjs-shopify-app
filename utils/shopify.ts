@@ -1,7 +1,8 @@
 import crypto from 'crypto'
 import queryString from 'querystring'
+import { NextApiRequest } from 'next'
 
-export function validateProxy (req) {
+export function validateProxy (req: NextApiRequest) {
   const urlQuery = req.url.split('?')[1]
   const query = queryString.parse(urlQuery)
   const signature = query.signature
