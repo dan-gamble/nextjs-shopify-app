@@ -2,8 +2,9 @@ import { verifyProxySignature } from '../../../utils/shopify'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function proxy (req: NextApiRequest, res: NextApiResponse) {
-  if (verifyProxySignature(req.query)) {
-    res.setHeader('Content-Type', 'application/liquid')
+  res.setHeader('Content-Type', 'application/liquid')
+
+  if (!verifyProxySignature(req.query)) {
     res
       .status(401)
       .send(`There was an error processing this request`)

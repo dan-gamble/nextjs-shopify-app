@@ -1,5 +1,6 @@
 import Shopify, { ApiVersion } from '@shopify/shopify-api'
 import RedisStore from '@lib/redis'
+import { CALLBACK_URL } from '../constants'
 
 const sessionStorage = new RedisStore(process.env.REDIS_URL)
 const context = {
@@ -51,7 +52,7 @@ export function ShopifyAuth (config: { afterAuth: Function } = { afterAuth: () =
 async function loginRoute (req, res) {
   try {
     const { shop } = req.query
-    const authRoute = await Shopify.Auth.beginAuth(req, res, shop, '/api/auth/shopify/callback', true)
+    const authRoute = await Shopify.Auth.beginAuth(req, res, shop, CALLBACK_URL, true)
     console.log('New OAuth process begining.')
     res.writeHead(302, { 'Location': authRoute })
     res.end()

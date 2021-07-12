@@ -4,6 +4,7 @@ import PolarisProvider from '@components/PolarisProvider'
 import SessionProvider from '@components/SessionProvider'
 import ApolloProvider from '@components/ApolloProvider'
 import RoutePropagator from '@components/RoutePropagator'
+import { LOGIN_URL } from '../constants'
 
 export default function EmbeddedApp ({ children }) {
   const API_KEY = process.env.NEXT_PUBLIC_SHOPIFY_APP_API_KEY
@@ -17,7 +18,7 @@ export default function EmbeddedApp ({ children }) {
     if (url.searchParams.has('host')) {
       setHost(url.searchParams.get('host'))
     } else {
-      window.location.pathname = `/api/auth/shopify/login`
+      window.location.pathname = LOGIN_URL
     }
   }, [])
 

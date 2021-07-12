@@ -52,14 +52,3 @@ export default function Home () {
     </div>
   )
 }
-
-export async function getServerSideProps ({ req, res }) {
-  if (req.headers.accept === 'application/liquid') {
-    res.setHeader('Content-Type', 'application/liquid')
-    res.write('<p>Cheese</p>')
-    res.end()
-  }
-  return {
-    props: {}, // will be passed to the page component as props
-  }
-}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { getSessionToken } from '@shopify/app-bridge-utils'
 import { useAppBridge } from '@shopify/app-bridge-react'
+import { LOGIN_URL } from '../constants'
 
 export default function SessionProvider ({ children }) {
   const app = useAppBridge()
@@ -10,7 +11,7 @@ export default function SessionProvider ({ children }) {
       const session = await getSessionToken(app)
 
       if (!session) {
-        window.location.pathname = `/api/auth/shopify/login`
+        window.location.pathname = LOGIN_URL
       }
     }
 
