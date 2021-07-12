@@ -1,29 +1,34 @@
-import { AppProvider } from "@shopify/polaris";
-import Link from 'next/link'
-import translations from "@shopify/polaris/locales/en.json";
+import { AppProvider } from '@shopify/polaris'
+import translations from '@shopify/polaris/locales/en.json'
+import { default as NextLink } from 'next/link'
+import React from 'react'
 
-const CustomLinkComponent = ({
-  as,
-  children,
-  url,
-  external,
-  role,
-  ...rest
-}) => {
-  if (external) {
+function CustomLinkComponent ({ children, external, url, ...rest }) {
+  const mailto = url.startsWith('mailto:')
+
+  if (external || mailto) {
+    const target = external ? '_blank' : '_top'
+    const rel = external ? 'noopener noreferrer' : undefined
+
     return (
-      <a href={url} target="_blank" rel="noopener noreferrer" {...rest}>
+      <a target={target} href={url} rel={rel} {...rest}>
         {children}
       </a>
-    );
+    )
   }
-  return (
-    <Link href={url}>
-      <button {...rest}>{children}</button>
-    </Link>
-  );
-};
 
-export default function PolarisProvider({children}) {
-  return <AppProvider i18n={translations} linkComponent={CustomLinkComponent}>{children}</AppProvider>
+  return (
+    <NextLink href={url}>
+      <a {...rest}>{children}</a>
+    </NextLink>
+  )
+}
+
+export default function PolarisProvider ({ children }) {
+  return <AppProvider
+    i18n={translations}
+    linkComponent={CustomLinkComponent}
+  >
+    {children}
+  </AppProvider>
 }

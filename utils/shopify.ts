@@ -1,29 +1,33 @@
 import crypto from 'crypto'
-import queryString from 'querystring'
-import { NextApiRequest } from 'next'
 
-export function validateProxy (req: NextApiRequest) {
-  const urlQuery = req.url.split('?')[1]
-  const query = queryString.parse(urlQuery)
-  const signature = query.signature
-  delete query.signature
+type Query = {
+  [key: string]: string | string[];
+}
 
-  const input = Object.keys(query)
+export function verifyProxySignature (query: Query,) {
+  const { signature = '', ...otherQueryParams }: Query = <{ signature: string }>query
+
+  delete otherQueryParams.path
+
+  const input = Object.keys(otherQueryParams)
     .sort()
-    .map(function (key) {
-      let value = query[key]
+    .map(key => {
+      const value = otherQueryParams[key]
 
-      if (!Array.isArray(value)) {
-        value = [value]
-      }
-
-      return `${key}=${value.join(',')}`
+      return `${key}=${value}`
     })
     .join('')
-  const hash = crypto
+
+  const hmac = crypto
     .createHmac('sha256', process.env.SHOPIFY_API_SECRET)
     .update(input)
     .digest('hex')
 
-  return signature === hash
+  const digest = Buffer.from(hmac, 'utf-8')
+  const checksum = Buffer.from(signature, 'utf-8')
+
+  return (
+    digest.length === checksum.length &&
+    crypto.timingSafeEqual(digest, checksum)
+  )
 }

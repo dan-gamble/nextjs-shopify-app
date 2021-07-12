@@ -4,10 +4,13 @@ import PolarisProvider from '@components/PolarisProvider'
 import SessionProvider from '@components/SessionProvider'
 import ApolloProvider from '@components/ApolloProvider'
 import RoutePropagator from '@components/RoutePropagator'
+import { useRouteChangeLoader } from '../hooks/useRouteChangeLoader'
 
 export default function EmbeddedApp ({ children }) {
   const API_KEY = process.env.NEXT_PUBLIC_SHOPIFY_APP_API_KEY
   const [host, setHost] = useState('')
+
+  useRouteChangeLoader()
 
   useEffect(() => {
     const url = new URL(window.location.href)
