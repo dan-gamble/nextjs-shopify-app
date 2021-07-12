@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, { useState, useCallback } from 'react'
 import {
   Layout,
   Page,
@@ -11,56 +11,56 @@ import {
   AccountConnection,
   ChoiceList,
   SettingToggle,
-} from '@shopify/polaris';
-import {ImportMinor} from '@shopify/polaris-icons';
-import { useRouter } from 'next/router';
+} from '@shopify/polaris'
+import { ImportMinor } from '@shopify/polaris-icons'
+import { useRouter } from 'next/router'
 
-export default function Index() {
-  const [first, setFirst] = useState('');
-  const [last, setLast] = useState('');
-  const [email, setEmail] = useState('');
-  const [checkboxes, setCheckboxes] = useState([]);
-  const [connected, setConnected] = useState(false);
+export default function Index () {
+  const [first, setFirst] = useState('')
+  const [last, setLast] = useState('')
+  const [email, setEmail] = useState('')
+  const [checkboxes, setCheckboxes] = useState([])
+  const [connected, setConnected] = useState(false)
   const router = useRouter()
 
-  const handleFirstChange = useCallback((value) => setFirst(value), []);
-  const handleLastChange = useCallback((value) => setLast(value), []);
-  const handleEmailChange = useCallback((value) => setEmail(value), []);
+  const handleFirstChange = useCallback((value) => setFirst(value), [])
+  const handleLastChange = useCallback((value) => setLast(value), [])
+  const handleEmailChange = useCallback((value) => setEmail(value), [])
   const handleCheckboxesChange = useCallback(
     (value) => setCheckboxes(value),
     [],
-  );
+  )
 
   const toggleConnection = useCallback(
     () => {
-      setConnected(!connected);
+      setConnected(!connected)
     },
     [connected],
-  );
+  )
 
   const breadcrumbs = [{
     content: 'Sample apps',
     onAction: () => {
-      router.back();
-    }
-  }];
-  const primaryAction = {content: 'New product'};
-  const secondaryActions = [{content: 'Import', icon: ImportMinor}];
+      router.back()
+    },
+  }]
+  const primaryAction = { content: 'New product' }
+  const secondaryActions = [{ content: 'Import', icon: ImportMinor }]
 
   const choiceListItems = [
-    {label: 'I accept the Terms of Service', value: 'false'},
-    {label: 'I consent to receiving emails', value: 'false2'},
-  ];
+    { label: 'I accept the Terms of Service', value: 'false' },
+    { label: 'I consent to receiving emails', value: 'false2' },
+  ]
 
   const accountSectionDescription = connected
     ? 'Disconnect your account from your Shopify store.'
-    : 'Connect your account to your Shopify store.';
+    : 'Connect your account to your Shopify store.'
 
   const accountMarkup = connected ? (
     <DisconnectAccount onAction={toggleConnection} />
   ) : (
     <ConnectAccount onAction={toggleConnection} />
-  );
+  )
 
   return (
     <Page
@@ -119,6 +119,8 @@ export default function Index() {
               />
 
               <ChoiceList
+                title="Choices"
+                titleHidden
                 allowMultiple
                 choices={choiceListItems}
                 selected={checkboxes}
@@ -138,13 +140,13 @@ export default function Index() {
         </Layout.Section>
       </Layout>
     </Page>
-  );
+  )
 }
 
-function ConnectAccount({onAction}) {
+function ConnectAccount ({ onAction }) {
   return (
     <AccountConnection
-      action={{content: 'Connect', onAction}}
+      action={{ content: 'Connect', onAction }}
       details="No account connected"
       termsOfService={
         <p>
@@ -154,17 +156,17 @@ function ConnectAccount({onAction}) {
         </p>
       }
     />
-  );
+  )
 }
 
-function DisconnectAccount({onAction}) {
+function DisconnectAccount ({ onAction }) {
   return (
     <AccountConnection
       connected
-      action={{content: 'Disconnect', onAction}}
+      action={{ content: 'Disconnect', onAction }}
       accountName="Tom Ford"
       title={<Link url="http://google.com">Tom Ford</Link>}
       details="Account id: d587647ae4"
     />
-  );
+  )
 }
