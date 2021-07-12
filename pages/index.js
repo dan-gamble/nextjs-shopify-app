@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export default function Home () {
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +11,8 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <a href="https://nextjs.org">Next.js</a> Shopify App Boilerplate
+          <a href="https://nextjs.org">Next.js</a>
+          Shopify App Boilerplate
         </h1>
 
         <p className={styles.description}>
@@ -50,4 +51,15 @@ export default function Home() {
       </main>
     </div>
   )
+}
+
+export async function getServerSideProps ({ req, res }) {
+  if (req.headers.accept === 'application/liquid') {
+    res.setHeader('Content-Type', 'application/liquid')
+    res.write('<p>Cheese</p>')
+    res.end()
+  }
+  return {
+    props: {}, // will be passed to the page component as props
+  }
 }

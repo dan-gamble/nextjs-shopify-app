@@ -16,9 +16,11 @@
     "@shopify/polaris": "^6.5.0",
     "@shopify/shopify-api": "^1.4.1",
     "apollo-boost": "^0.4.9",
+    "crypto": "^1.0.1",
     "graphql": "^15.5.0",
     "ioredis": "^4.27.6",
     "next": "11.x",
+    "querystring": "^0.2.1",
     "react": "17.x",
     "react-apollo": "^3.1.5",
     "react-dom": "17.x"
