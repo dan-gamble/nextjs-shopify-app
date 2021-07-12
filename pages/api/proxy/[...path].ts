@@ -10,8 +10,10 @@ export default async function proxy (req, res) {
   }
 
   res.setHeader('Content-Type', 'application/liquid')
-  res.write('<p>Cheese</p>')
-  res.end()
 
-  return '<p>Test</p>'
+  return res.send(`
+<p>This is a proxy page</p>
+{%- assign num = 42 -%}
+{{ num }}
+  `)
 }
