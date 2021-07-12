@@ -1,9 +1,11 @@
 import Redis from 'ioredis'
 
 export default class RedisStore {
-  constructor(url) {
+  client: Redis
+
+  constructor (url) {
     // Create a new redis client
-    this.client = new Redis(url);
+    this.client = new Redis(url)
   }
 
   /*
@@ -21,7 +23,7 @@ export default class RedisStore {
       // throw errors, and handle them gracefully in your application
       throw new Error(err)
     }
-  };
+  }
 
   /*
     The loadCallback takes in the id, and uses the getAsync method to access the session data
@@ -33,16 +35,16 @@ export default class RedisStore {
       // Inside our try, we use `getAsync` to access the method by id
       // If we receive data back, we parse and return it
       // If not, we return `undefined`
-      let reply = await this.client.get(id);
+      let reply = await this.client.get(id)
       if (reply) {
-        return JSON.parse(reply);
+        return JSON.parse(reply)
       } else {
         return undefined
       }
     } catch (err) {
       throw new Error(err)
     }
-  };
+  }
 
   /*
     The deleteCallback takes in the id, and uses the redis `del` method to delete it from the store
@@ -57,5 +59,5 @@ export default class RedisStore {
     } catch (err) {
       throw new Error(err)
     }
-  };
+  }
 }
