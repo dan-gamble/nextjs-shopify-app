@@ -3,7 +3,7 @@ import EmbeddedApp from '@components/EmbeddedApp'
 
 import '@shopify/polaris/dist/styles.css'
 
-export default function App ({ Component, pageProps }) {
+function App ({ Component, pageProps }) {
   const { pathname } = useRouter()
   const isEmbedded = pathname.startsWith('/embedded')
 
@@ -16,3 +16,5 @@ export default function App ({ Component, pageProps }) {
     </>
   )
 }
+
+export default App
