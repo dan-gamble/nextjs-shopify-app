@@ -27,6 +27,7 @@ export default function EmbeddedApp ({ children }) {
         <AppBridgeProvider config={{ apiKey: API_KEY, host, forceRedirect: true }}>
           <SessionProvider>
             <RoutePropagator />
+
             <ApolloProvider>
               {children}
             </ApolloProvider>
