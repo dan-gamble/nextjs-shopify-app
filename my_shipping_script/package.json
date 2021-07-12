@@ -1,0 +1,18 @@
+{
+  "name": "my_shipping_script",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@as-pect/cli": "^6.0.0",
+    "@shopify/scripts-checkout-apis": "^1.0.0",
+    "@shopify/scripts-toolchain-as": "^5.0.0",
+    "@types/jest": "^26.0.24",
+    "assemblyscript": "^0.18.13"
+  },
+  "scripts": {
+    "test": "asp --summary --verbose",
+    "build": "shopify-scripts-toolchain-as build --src src/shopify_main.ts --binary build/script.wasm --metadata build/metadata.json --domain checkout --ep shipping-methods -- --lib node_modules --optimize --use Date="
+  },
+  "engines": {
+    "node": ">=14.5.0"
+  }
+}

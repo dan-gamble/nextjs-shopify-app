@@ -1,0 +1,12 @@
+{
+  "version": "1",
+  "title": "my_shipping_script",
+  "description": "Shipping methods default script",
+  "configurationUi": true,
+  "configuration": {
+    "type": "single",
+    "schema": [
+
+    ]
+  }
+}

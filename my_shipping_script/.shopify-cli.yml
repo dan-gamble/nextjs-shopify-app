@@ -1,0 +1,6 @@
+---
+project_type: :script
+organization_id: 0
+extension_point_type: shipping_methods
+script_name: my_shipping_script
+language: assemblyscript
